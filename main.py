@@ -1,46 +1,26 @@
-import requests
-from lxml import html
+import random
+import time
+vert = "|"
+hor = "\u23b4"
+size = 30
+h_prob = 0.20
 
-import dotenv
-import os
-import datetime
+grid = []
 
-# load the environment variables
-dotenv.load_dotenv()
+last_square_empty = False
+for w in range(size):
+    grid.append([])
+    for h in range(size):
+        draw_vertical = random.randint(0, size-2) >= abs(w-h)
+        draw_horizontal = (random.randint(0, size) > h_prob*size) and last_square_empty
+        grid[w].append((draw_vertical, draw_horizontal))
+        if draw_vertical or draw_horizontal:
+            last_square_empty = False
+        else:
+            last_square_empty = True
 
-# get the year and filename from the environment variables
-year = int(os.getenv('YEAR', 2024))
-filename = os.getenv('FILENAME', "crawled-page-{year}.html").format(year=year)
-
-# initialize the data list
-data = []
-
-# check if the page exists
-if not os.path.exists(filename):
-
-    # fetch the page if it doesn't exist
-    page = requests.get(os.getenv('URL'))
-
-    # save the page to a file
-    with open(filename, 'w', encoding='UTF8') as f:
-        f.write(page.text)
-
-    page = page.text
-
-else:
-    # if the page exists, read it from the file
-    with open(filename, 'r', encoding='UTF8') as f:
-        page = f.read()
-
-# parse the page to html
-tree = html.fromstring(page)
-
-# get the rows from the table
-rows = tree.xpath(os.getenv('ROW_XPATH'))
-
-# print the number of rows
-print(len(rows))
-
-# print the rows
-for row in rows:
-    print(row.text_content())
+for h in range(size):
+    for w in range(size):
+        print(vert if grid[w][h][0] else " ", end="")
+        print(hor if grid[w][h][1] else " ", end="")
+    print()
