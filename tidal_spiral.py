@@ -1,3 +1,19 @@
+# 可视化绘制五角星
+import turtle
+
+def draw_star(size=200):
+    t = turtle.Turtle()
+    t.pensize(3)
+    t.color('gold')
+    t.speed(3)
+    for _ in range(5):
+        t.forward(size)
+        t.right(144)
+    turtle.done()
+
+# 如果直接运行本文件，则绘制五角星
+if __name__ == "__main__":
+    draw_star()
 import pygame
 import pandas as pd
 import math
