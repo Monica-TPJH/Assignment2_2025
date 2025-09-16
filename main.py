@@ -1,26 +1,51 @@
-import random
-import time
-vert = "|"
-hor = "\u23b4"
-size = 30
-h_prob = 0.20
+import pygame
+import pandas as pd
+import math
+import sys
 
-grid = []
+# Load tidal data from CSV
+tidal_data = pd.read_csv('../tides.csv')
+if 'tide' in tidal_data.columns:
+    tide_values = tidal_data['tide'].tolist()
+else:
+    tide_values = tidal_data.iloc[:, 1].tolist()  # fallback: use second column
 
-last_square_empty = False
-for w in range(size):
-    grid.append([])
-    for h in range(size):
-        draw_vertical = random.randint(0, size-2) >= abs(w-h)
-        draw_horizontal = (random.randint(0, size) > h_prob*size) and last_square_empty
-        grid[w].append((draw_vertical, draw_horizontal))
-        if draw_vertical or draw_horizontal:
-            last_square_empty = False
-        else:
-            last_square_empty = True
+WIDTH, HEIGHT = 800, 800
+CENTER = (WIDTH // 2, HEIGHT // 2)
+BG_COLOR = (10, 10, 30)
 
-for h in range(size):
-    for w in range(size):
-        print(vert if grid[w][h][0] else " ", end="")
-        print(hor if grid[w][h][1] else " ", end="")
-    print()
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('Tidal Spiral Visualization')
+clock = pygame.time.Clock()
+
+running = True
+frame = 0
+num_points = len(tide_values)
+save_count = 1
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_s:
+                filename = f"tidal_spiral_{save_count}.png"
+                pygame.image.save(screen, filename)
+                print(f"Saved current spiral as {filename}")
+                save_count += 1
+
+    screen.fill(BG_COLOR)
+    for i in range(num_points):
+        angle = 0.1 * i + frame * 0.01
+        radius = 100 + 200 * (tide_values[i] / max(tide_values))
+        x = CENTER[0] + int(radius * math.cos(angle))
+        y = CENTER[1] + int(radius * math.sin(angle))
+        color = (100 + int(155 * (tide_values[i] / max(tide_values))), 100, 255)
+        pygame.draw.circle(screen, color, (x, y), 4)
+    pygame.display.flip()
+    frame += 1
+    clock.tick(30)
+
+pygame.quit()
+sys.exit()
