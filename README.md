@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 # Assignment2_2025
 
 ## simple_animation.py 示例代码
@@ -68,4 +65,4 @@ git add README.md
 git commit -m "更新 README 内容"
 git push origin main
 ```
->>>>>>> 99a52c9 (更新 README 内容)
+
