@@ -15,6 +15,51 @@ fig, ax = plt.subplots(figsize=(W, H), dpi=dpi)
 ax.set_facecolor('white')
 ax.axis('off')
 
+# --- Universe-like background (radial gradient + nebula blobs + starfield)
+def create_universe_background(xmin=-400, xmax=400, ymin=-400, ymax=400, res=800, seed=42):
+    import numpy as _np
+    _np.random.seed(seed)
+    xs = _np.linspace(xmin, xmax, res)
+    ys = _np.linspace(ymin, ymax, res)
+    X, Y = _np.meshgrid(xs, ys)
+    R = _np.sqrt((X/ (xmax-xmin))**2 + (Y/ (ymax-ymin))**2)
+
+    # base radial gradient (darker at edges)
+    base = 0.08 + 0.6 * _np.exp(-3 * R)
+
+    # add a few colored nebula blobs
+    neb = _np.zeros_like(base)
+    for cx, cy, amp, sigma, hue in [(-150, -50, 0.6, 120, 0.55), (120, 80, 0.45, 160, 0.65), (40, -120, 0.35, 90, 0.48)]:
+        neb += amp * _np.exp(-((X-cx)**2 + (Y-cy)**2) / (2*sigma**2)) * (0.5 + 0.5*hue)
+
+    img = _np.zeros((res, res, 3), dtype=_np.float32)
+    # base color: deep blue -> purple tint
+    img[..., 0] = base * 0.02 + neb * 0.05  # red channel small
+    img[..., 1] = base * 0.12 + neb * 0.12  # green
+    img[..., 2] = base * 0.25 + neb * 0.35  # blue
+
+    # add subtle bright core
+    img += _np.expand_dims(0.15 * _np.exp(-R*6), axis=2)
+
+    # clip
+    img = _np.clip(img, 0, 1)
+    return img
+
+# draw background image and a starfield
+bg_img = create_universe_background(res=900)
+ax.imshow(bg_img, extent=[-400,400,-400,400], origin='lower', zorder=0)
+
+# starfield on zorder 1
+rng = np.random.RandomState(0)
+num_stars = 800
+sx = rng.uniform(-380, 380, num_stars)
+sy = rng.uniform(-380, 380, num_stars)
+ss = rng.uniform(0.3, 2.5, num_stars)
+alphas = rng.uniform(0.3, 1.0, num_stars)
+star_colors = ['#ffffff'] * num_stars
+ax.scatter(sx, sy, s=ss, c=star_colors, alpha=alphas, linewidths=0, zorder=1)
+
+
 # Raindrops parameters
 raindrops = 300
 theta = np.linspace(0, 4*np.pi, raindrops)
