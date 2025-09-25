@@ -2,9 +2,26 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation, PillowWriter
+import os
+
+# Auto-detect CSV file location
+def find_csv_file():
+    possible_paths = [
+        'hko_tropical_warnings_1956_2024.csv',  # Current directory
+        'HK_Typhoon_animation/hko_tropical_warnings_1956_2024.csv',  # Parent/child
+        '../hko_tropical_warnings_1956_2024.csv',  # Parent directory
+    ]
+    
+    for path in possible_paths:
+        if os.path.exists(path):
+            print(f"Found CSV file at: {path}")
+            return path
+    
+    raise FileNotFoundError("Could not find hko_tropical_warnings_1956_2024.csv")
 
 # Read data
-df = pd.read_csv('hko_tropical_warnings_1956_2024.csv')
+csv_path = find_csv_file()
+df = pd.read_csv(csv_path)
 intensity = df['TotalHours'].values
 norm = (intensity - intensity.min()) / (intensity.max() - intensity.min())
 
