@@ -116,7 +116,8 @@ python create_cyclone_animation.py       # PIL-based animation
 
 ### Labor Market Dynamic Animation
 **Particle Explosion Animation - Unemployment Rate Driven Effects**
-![Labor Particle Explosion](HK_Labor/hk_unemployment_preview.gif)
+
+![Labor Particle Explosion](HK_Labor/hk_unemployment_preview_optimized.gif)
 
 *The particle explosion intensity and color change dynamically based on unemployment rates - higher unemployment creates more intense red explosions, while lower rates produce gentler yellow effects.*
 
@@ -125,9 +126,11 @@ python create_cyclone_animation.py       # PIL-based animation
 
 ### Typhoon Dynamic Animations
 **Matplotlib-based Universe Animation**
-![Typhoon Animation - Matplotlib](HK_Typhoon_animation/cyclone_anim_py.gif)
+
+![Typhoon Animation - Matplotlib](HK_Typhoon_animation/cyclone_anim_py_optimized.gif)
 
 **PIL-based Cyclone Animation**
+
 ![Typhoon Animation - PIL](HK_Typhoon_animation/cyclone_animation.gif)
 
 *Both animations visualize 68+ years of typhoon warning data with different artistic approaches - the first features a starry universe background, while the second focuses on cyclone formation patterns.*
