@@ -80,8 +80,8 @@ Virtual environment (recommended)
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/Monica-TPJH/Assignment2_2025.git
-cd Assignment2_2025
+git clone https://github.com/Monica-TPJH/Data_visualization_Assignment2.git
+cd Data_visualization_Assignment2
 
 # Create and activate virtual environment
 python3 -m venv .venv
@@ -114,12 +114,23 @@ python create_cyclone_animation.py       # PIL-based animation
 ![Unemployment Trends](HK_Labor/hk_labor_trends.png)
 ![Gender Distribution](HK_Labor/hk_labor_gender.png)
 
-### Typhoon Animation
+### Labor Market Dynamic Animation
+**Particle Explosion Animation - Unemployment Rate Driven Effects**
+![Labor Particle Explosion](HK_Labor/hk_unemployment_preview.gif)
+
+*The particle explosion intensity and color change dynamically based on unemployment rates - higher unemployment creates more intense red explosions, while lower rates produce gentler yellow effects.*
+
+### Typhoon Visualization
 ![Cyclone Visualization](HK_Typhoon_animation/cyclone_visualization.png)
 
-### Dynamic Animations
-- **Labor Particle Explosion**: `HK_Labor/hk_unemployment_preview.gif`
-- **Typhoon Animation**: `HK_Typhoon_animation/cyclone_anim_py.gif`
+### Typhoon Dynamic Animations
+**Matplotlib-based Universe Animation**
+![Typhoon Animation - Matplotlib](HK_Typhoon_animation/cyclone_anim_py.gif)
+
+**PIL-based Cyclone Animation**
+![Typhoon Animation - PIL](HK_Typhoon_animation/cyclone_animation.gif)
+
+*Both animations visualize 68+ years of typhoon warning data with different artistic approaches - the first features a starry universe background, while the second focuses on cyclone formation patterns.*
 
 ## 🛠️ Technical Stack
 
@@ -212,8 +223,8 @@ This project is created for educational and research purposes. Data sources are 
 ## 📞 Contact
 
 For questions, suggestions, or collaboration opportunities:
-- **Repository**: https://github.com/Monica-TPJH/Assignment2_2025
-- **Issues**: https://github.com/Monica-TPJH/Assignment2_2025/issues
+- **Repository**: https://github.com/Monica-TPJH/Data_visualization_Assignment2
+- **Issues**: https://github.com/Monica-TPJH/Data_visualization_Assignment2/issues
 
 ---
 
