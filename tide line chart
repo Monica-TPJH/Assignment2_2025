@@ -1,0 +1,22 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 读取潮汐数据
+df = pd.read_csv('tides.csv')
+
+# 尝试自动识别潮汐列
+if 'tide' in df.columns:
+    tide = df['tide']
+else:
+    tide = df.iloc[:, 1]  # 默认取第二列
+
+plt.figure(figsize=(12, 5))
+plt.plot(tide, label='Tide Level')
+plt.title('Tidal Data Visualization')
+plt.xlabel('Time Index')
+plt.ylabel('Tide Level')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig('tide_line_chart.png')
+plt.show()
